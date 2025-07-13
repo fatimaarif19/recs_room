@@ -1,1 +1,13 @@
 @import "tailwindcss";
+body {
+  font-family: 'VT323', monospace;
+  font-size: 1.6rem;
+}
+body {
+  background: repeating-linear-gradient(
+    0deg,
+    #e7e4dc,
+    #e7e4dc 1px,
+    #dcd8d0 2px
+  );
+}
