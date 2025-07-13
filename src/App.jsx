@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import ListCard from './components/ListCard';
 import AddListModal from './components/AddList';
-import initialLists from './data';
 import bg from './assets/bg.jpg'; 
 function App() {
   const [lists, setLists] = useState([]);
