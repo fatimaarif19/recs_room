@@ -3,6 +3,9 @@ import Navbar from './components/Navbar';
 import ListCard from './components/ListCard';
 import AddListModal from './components/AddList';
 import bg from './assets/bg.jpg'; 
+import FloatingCD from './components/cd';
+import SpotifyModal from './components/SpotifyModal';
+
 function App() {
   const [lists, setLists] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,10 +18,8 @@ function App() {
       } catch (e) {
         console.error("Error parsing localStorage data:", e);
       }
-    } else {
     }
   }, []);
-
 
   useEffect(() => {
     if (lists.length > 0) {
@@ -28,6 +29,15 @@ function App() {
 
   const handleAddList = (newList) => {
     setLists([newList, ...lists]);
+  };
+
+  const [spotifyLink, setSpotifyLink] = useState('');
+  const [isSpotifyOpen, setIsSpotifyOpen] = useState(false);
+
+  const getEmbedUrl = (link) => {
+    const match = link.match(/spotify\.com\/(track|playlist|album)\/(\w+)/);
+    if (!match) return null;
+    return `https://open.spotify.com/embed/${match[1]}/${match[2]}`;
   };
 
   return (
@@ -50,6 +60,30 @@ function App() {
           ))}
         </div>
       </div>
+
+      {/* 🔊 Spotify floating CD button, modal, and player */}
+      <FloatingCD onClick={() => setIsSpotifyOpen(true)} />
+
+      <SpotifyModal
+        isOpen={isSpotifyOpen}
+        onClose={() => setIsSpotifyOpen(false)}
+        onLinkSubmit={setSpotifyLink}
+      />
+
+      {spotifyLink && (
+        <div className="fixed bottom-6 left-6 w-80 h-24 z-40">
+          <iframe
+            src={getEmbedUrl(spotifyLink)}
+            width="100%"
+            height="80"
+            frameBorder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+            title="Spotify Player"
+            className="rounded-lg shadow-md"
+          ></iframe>
+        </div>
+      )}
     </div>
   );
 }
