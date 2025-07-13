@@ -14,10 +14,8 @@ function App() {
         setLists(JSON.parse(saved));
       } catch (e) {
         console.error("Error parsing localStorage data:", e);
-        setLists(initialLists);
       }
     } else {
-      setLists(initialLists);
     }
   }, []);
 
